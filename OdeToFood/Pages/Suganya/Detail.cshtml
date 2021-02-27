@@ -13,5 +13,9 @@
 <div>
     Cusine: @Model.Restaurant.CusineType
 </div>
+@if (Model.Message!=null)
+{
+    <div class="alert alert-info">@Model.Message</div>
+}
 <br />
 <a asp-page="./List">All Restaurants</a>

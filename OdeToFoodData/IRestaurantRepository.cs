@@ -11,6 +11,9 @@ namespace OdeToFoodData
         IEnumerable<Restaurant> GetRestaurant();
         IEnumerable<Restaurant> GetRestaurantByName(string name);
         Restaurant GetSingleRestaurant(int id);
+        Restaurant UpdateRestaurant(Restaurant updaterestaurant);
+        Restaurant Add(Restaurant newRestaurant);
+        int commit();
     }
     public class RestaurantRepository : IRestaurantRepository
     {
@@ -39,6 +42,19 @@ namespace OdeToFoodData
                 CusineType = CusineType.Mexican,
             });
         }
+
+        public Restaurant Add(Restaurant newRestaurant)
+        {
+            restaurants.Add(newRestaurant);
+            newRestaurant.Id = restaurants.Max(r=>r.Id)+1;
+            return newRestaurant;
+        }
+
+        public int commit()
+        {
+            return 1;
+        }
+
         public IEnumerable<Restaurant> GetRestaurant()
         {
             return this.restaurants;   
@@ -55,6 +71,18 @@ namespace OdeToFoodData
                 return this.restaurants.First(x => x.Id == id);
             }
             return null;
+        }
+
+        public Restaurant UpdateRestaurant(Restaurant updaterestaurant)
+        {
+            var restaurant = restaurants.SingleOrDefault(r => r.Id == updaterestaurant.Id);
+            if (restaurant != null)
+            {
+                restaurant.Name = updaterestaurant.Name;
+                restaurant.Location = updaterestaurant.Location;
+                restaurant.CusineType = updaterestaurant.CusineType;
+            }
+            return restaurant;
         }
     }
 }

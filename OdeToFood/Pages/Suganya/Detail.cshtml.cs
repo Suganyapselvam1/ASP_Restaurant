@@ -11,6 +11,8 @@ namespace OdeToFood.Pages.Suganya
 {
     public class DetailModel : PageModel
     {
+        [TempData]
+        public string Message { get; set; }
         public Restaurant Restaurant { get; set; }
         private IRestaurantRepository RestaurantRepository;
         public DetailModel(IRestaurantRepository restaurantRepository)
